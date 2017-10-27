@@ -118,7 +118,3 @@ int main()
 	ncNewline();
 	return 0;
 }
-
-int bcd_to_decimal(unsigned char x) {
-    return x - 6 * (x >> 4);
-}
