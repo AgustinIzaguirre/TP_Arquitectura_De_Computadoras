@@ -55,6 +55,9 @@ getHours:
 	out 70h,al
 	in al,71h
 	sub al,03h
+	JNS end
+	add al,18h
+	end:
 	movzx rax,al
 	mov rsp,rbp
 	pop rbp
@@ -85,7 +88,6 @@ getMonth:
 	mov al,08h
 	out 70h,al
 	in al,71h
-	sub al,03h
 	movzx rax,al
 	mov rsp,rbp
 	pop rbp
@@ -101,7 +103,6 @@ getDay:
 	mov al,07h
 	out 70h,al
 	in al,71h
-	sub al,03h
 	movzx rax,al
 	mov rsp,rbp
 	pop rbp
