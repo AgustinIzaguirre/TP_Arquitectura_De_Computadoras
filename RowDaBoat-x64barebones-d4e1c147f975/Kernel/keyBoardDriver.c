@@ -14,3 +14,8 @@ void readKeyboard() {
 	}
 }
 
+void keyboard_handler() {
+	unsigned char l = getKey();
+	ncPrintChar(keyCodes[l-1]);
+}
+

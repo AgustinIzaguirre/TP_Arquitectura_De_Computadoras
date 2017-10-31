@@ -111,19 +111,27 @@ int main()
 	ncPrintDec(minutes);
 	ncPrint(" : ");
 	ncPrintDec(secs);
-	ncNewline();
+	ncNewline();	
 	ncPrint("Ticks elapsed: ");
 	ncNewline();
 	ncPrintDec(ticks_elapsed());
-
+	ncNewline();
+	uint64_t i = ticks_elapsed();
+	while(i<10) {
+		i = ticks_elapsed();
+	}
+	// 	ncPrintDec(ticks_elapsed());
+	// 	ncNewline();
+	// }
 	//ncPrintDec(bcd_to_decimal(minutes));
+	ncPrintDec(ticks_elapsed());
 	
 	ncNewline();
 	//ncPrintDec(getKey());
-	readKeyboard();
+	//readKeyboard();
 	ncNewline();
 	ncPrint("Termino");
 	ncNewline();
-	
+	while(1);
 	return 0;
 }

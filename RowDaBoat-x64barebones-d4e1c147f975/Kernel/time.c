@@ -1,11 +1,11 @@
 #include <time.h>
-#include <naiveConsole.h>
+//#include <naiveConsole.h>
 
 static unsigned long ticks = 0;
 
 void timer_handler() {
 	ticks++;
-	ncPrintDec(ticks);
+	//ncPrintDec(ticks);
 }
 
 int ticks_elapsed() {

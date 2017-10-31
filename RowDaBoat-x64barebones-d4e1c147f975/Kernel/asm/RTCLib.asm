@@ -14,7 +14,7 @@ RTCConfig:
 	in al,71h
 	or al, 0100b
 	out 71h,al
-	sli
+	sti
 	ret
 
 getSeconds:
