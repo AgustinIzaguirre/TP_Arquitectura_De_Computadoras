@@ -20,4 +20,15 @@ int getMonth(void);
 
 int getDay(void);
 
+unsigned char getKey(void);
+
+void readKeyboard(void);
+
+void setup_IDT_entry (int index, uint64_t offset);
+
+void timerTickHandler(void);
+
+void setUPTimerTickHandler(void); 
+
+
 #endif

@@ -17,8 +17,6 @@ static void * const sampleCodeModuleAddress = (void*)0x400000;
 static void * const sampleDataModuleAddress = (void*)0x500000;
 
 
-int bcd_to_decimal(unsigned char x);
-
 typedef int (*EntryPoint)();
 
 
@@ -40,54 +38,53 @@ void * initializeKernelBinary()
 {
 	char buffer[10];
 
-	// ncPrint("[x64BareBones]");
-	// ncNewline();
+	ncPrint("[x64BareBones]");
+	ncNewline();
 
-	// ncPrint("CPU Vendor:");
-	// ncPrint(cpuVendor(buffer));
-	// ncNewline();
+	ncPrint("CPU Vendor:");
+	ncPrint(cpuVendor(buffer));
+	ncNewline();
 
-	// ncPrint("[Loading modules]");
-	// ncNewline();
+	ncPrint("[Loading modules]");
+	ncNewline();
 	void * moduleAddresses[] = {
 		sampleCodeModuleAddress,
 		sampleDataModuleAddress
 	};
 
 	loadModules(&endOfKernelBinary, moduleAddresses);
-	// ncPrint("[Done]");
-	// ncNewline();
-	// ncNewline();
+	ncPrint("[Done]");
+	ncNewline();
+	ncNewline();
 
-	// ncPrint("[Initializing kernel's binary]");
-	// ncNewline();
+	ncPrint("[Initializing kernel's binary]");
+	ncNewline();
 
 	clearBSS(&bss, &endOfKernel - &bss);
 
-	// ncPrint("  text: 0x");
-	// ncPrintHex((uint64_t)&text);
-	// ncNewline();
-	// ncPrint("  rodata: 0x");
-	// ncPrintHex((uint64_t)&rodata);
-	// ncNewline();
-	// ncPrint("  data: 0x");
-	// ncPrintHex((uint64_t)&data);
-	// ncNewline();
-	// ncPrint("  bss: 0x");
-	// ncPrintHex((uint64_t)&bss);
-	// ncNewline();
+	ncPrint("  text: 0x");
+	ncPrintHex((uint64_t)&text);
+	ncNewline();
+	ncPrint("  rodata: 0x");
+	ncPrintHex((uint64_t)&rodata);
+	ncNewline();
+	ncPrint("  data: 0x");
+	ncPrintHex((uint64_t)&data);
+	ncNewline();
+	ncPrint("  bss: 0x");
+	ncPrintHex((uint64_t)&bss);
+	ncNewline();
 
-	// ncPrint("[Done]");
-	// ncNewline();
-	// ncNewline();
+	ncPrint("[Done]");
+	ncNewline();
+	ncNewline();
 	return getStackBase();
 }
 
 int main()
 {	
 
-	void setUPTimerTickHandler();
-
+	load_idt();
 	// ncPrint("[Kernel Main]");
 	// ncNewline();
 	// ncPrint("  Sample code module at 0x");
@@ -109,13 +106,16 @@ int main()
 	int secs = getSeconds();
 	int minutes = getMinutes();
 	int hours = getHours();
-
 	ncPrintDec(hours);
 	ncPrint(" : ");
 	ncPrintDec(minutes);
 	ncPrint(" : ");
 	ncPrintDec(secs);
-	
+	ncNewline();
+	ncPrint("Ticks elapsed: ");
+	ncNewline();
+	ncPrintDec(ticks_elapsed());
+
 	//ncPrintDec(bcd_to_decimal(minutes));
 	
 	ncNewline();
