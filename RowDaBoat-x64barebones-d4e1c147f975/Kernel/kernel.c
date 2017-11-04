@@ -2,7 +2,8 @@
 #include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <naiveConsole.h>
+#include <naiveConsole.h>	
+#include <videoDriver.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -85,53 +86,54 @@ int main()
 {	
 
 	load_idt();
-	// ncPrint("[Kernel Main]");
-	// ncNewline();
-	// ncPrint("  Sample code module at 0x");
-	// ncPrintHex((uint64_t)sampleCodeModuleAddress);
-	// ncNewline();
-	// ncPrint("  Calling the sample code module returned: ");
-	// ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	// ncNewline();
-	// ncNewline();
+	// // ncPrint("[Kernel Main]");
+	// // ncNewline();
+	// // ncPrint("  Sample code module at 0x");
+	// // ncPrintHex((uint64_t)sampleCodeModuleAddress);
+	// // ncNewline();
+	// // ncPrint("  Calling the sample code module returned: ");
+	// // ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
+	// // ncNewline();
+	// // ncNewline();
 
-	// ncPrint("  Sample data module at 0x");
-	// ncPrintHex((uint64_t)sampleDataModuleAddress);
-	// ncNewline();
-	// ncPrint("  Sample data module contents: ");
-	// ncPrint((char*)sampleDataModuleAddress);
-	// ncNewline();
+	// // ncPrint("  Sample data module at 0x");
+	// // ncPrintHex((uint64_t)sampleDataModuleAddress);
+	// // ncNewline();
+	// // ncPrint("  Sample data module contents: ");
+	// // ncPrint((char*)sampleDataModuleAddress);
+	// // ncNewline();
 
-	// ncPrint("[Finished]");
-	int secs = getSeconds();
-	int minutes = getMinutes();
-	int hours = getHours();
-	ncPrintDec(hours);
-	ncPrint(" : ");
-	ncPrintDec(minutes);
-	ncPrint(" : ");
-	ncPrintDec(secs);
-	ncNewline();	
-	ncPrint("Ticks elapsed: ");
-	ncNewline();
-	ncPrintDec(ticks_elapsed());
-	ncNewline();
-	uint64_t i = ticks_elapsed();
-	while(i<10) {
-		i = ticks_elapsed();
-	}
-	// 	ncPrintDec(ticks_elapsed());
-	// 	ncNewline();
+	// // ncPrint("[Finished]");
+	// int secs = getSeconds();
+	// int minutes = getMinutes();
+	// int hours = getHours();
+	// ncPrintDec(hours);
+	// ncPrint(" : ");
+	// ncPrintDec(minutes);
+	// ncPrint(" : ");
+	// ncPrintDec(secs);
+	// ncNewline();	
+	// ncPrint("Ticks elapsed: ");
+	// ncNewline();
+	// ncPrintDec(ticks_elapsed());
+	// ncNewline();
+	// uint64_t i = ticks_elapsed();
+	// while(i<10) {
+	// 	i = ticks_elapsed();
 	// }
-	//ncPrintDec(bcd_to_decimal(minutes));
-	ncPrintDec(ticks_elapsed());
+	// // 	ncPrintDec(ticks_elapsed());
+	// // 	ncNewline();
+	// // }
+	// //ncPrintDec(bcd_to_decimal(minutes));
+	// ncPrintDec(ticks_elapsed());
 	
-	ncNewline();
-	//ncPrintDec(getKey());
-	//readKeyboard();
-	ncNewline();
-	ncPrint("Termino");
-	ncNewline();
+	// ncNewline();
+	// //ncPrintDec(getKey());
+	// //readKeyboard();
+	// ncNewline();
+	// ncPrint("Termino");
+	// ncNewline();
+	set_up_VESA_mode();
 	while(1);
 	return 0;
 }

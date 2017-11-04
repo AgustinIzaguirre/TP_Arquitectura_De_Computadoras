@@ -1,5 +1,5 @@
 #include <time.h>
-//#include <naiveConsole.h>
+#include <naiveConsole.h>
 
 static unsigned long ticks = 0;
 
