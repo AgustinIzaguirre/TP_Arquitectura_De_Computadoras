@@ -2,5 +2,5 @@
 #define _KEYBOARD_H_
 
 void keyboard_handler();
-
+char getKey();
 #endif
