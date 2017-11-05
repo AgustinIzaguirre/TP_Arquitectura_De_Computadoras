@@ -10,5 +10,4 @@ getKey:
 	movzx rax, al
 	mov rsp,rbp
 	pop rbp
-	;sti
 	ret

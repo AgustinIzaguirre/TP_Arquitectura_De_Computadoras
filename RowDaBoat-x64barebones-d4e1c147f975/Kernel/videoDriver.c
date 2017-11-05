@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <videoDriver.h>
+#include <modeInfo.h>
 #include <font.h>
 
 
@@ -78,4 +79,20 @@ void set_up_VESA_mode();
          draw_char(word[i]);
          i++;
       }
+   }
+
+   void erase_char(){
+      if(pointer.x == 0){
+         pointer.y = pointer.y - CHAR_HEIGHT;
+         pointer.x = mode_info->width - CHAR_WIDTH;
+      }
+      else       
+         pointer.x = pointer.x - CHAR_WIDTH;
+      draw_char(' ');
+      pointer.x = pointer.x - CHAR_WIDTH;
+   }
+
+   void newLine(){
+      pointer.y = pointer.y + CHAR_HEIGHT;
+      pointer.x = 0;
    }
