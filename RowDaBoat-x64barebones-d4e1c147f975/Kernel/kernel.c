@@ -17,6 +17,7 @@ static const uint64_t PageSize = 0x1000;
 static void * const sampleCodeModuleAddress = (void*)0x400000;
 static void * const sampleDataModuleAddress = (void*)0x500000;
 
+void callWrite(void);
 
 typedef int (*EntryPoint)();
 
@@ -86,6 +87,7 @@ int main()
 {	
 
 	load_idt();
+	callWrite();
 	// // ncPrint("[Kernel Main]");
 	// // ncNewline();
 	// // ncPrint("  Sample code module at 0x");

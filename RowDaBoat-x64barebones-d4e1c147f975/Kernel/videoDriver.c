@@ -83,8 +83,12 @@ void set_up_VESA_mode();
 
    void erase_char(){
       if(pointer.x == 0){
-         pointer.y = pointer.y - CHAR_HEIGHT;
-         pointer.x = mode_info->width - CHAR_WIDTH;
+         if(pointer.y != 0) {
+            pointer.y = pointer.y - CHAR_HEIGHT;
+            pointer.x = mode_info->width - CHAR_WIDTH;
+         }
+         else
+            return;
       }
       else       
          pointer.x = pointer.x - CHAR_WIDTH;
