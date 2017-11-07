@@ -87,7 +87,7 @@ int main()
 {	
 
 	load_idt();
-	//callWrite();
+	callWrite();
 	// // ncPrint("[Kernel Main]");
 	// // ncNewline();
 	// // ncPrint("  Sample code module at 0x");
@@ -135,7 +135,7 @@ int main()
 	// ncNewline();
 	// ncPrint("Termino");
 	// ncNewline();
-	set_up_VESA_mode();
+	//set_up_VESA_mode();
 	while(1);
 	return 0;
 }
