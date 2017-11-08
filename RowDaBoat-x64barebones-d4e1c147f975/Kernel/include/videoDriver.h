@@ -21,4 +21,12 @@ void draw_char_with_color(uint8_t l, int x, int y,Color letter_color, Color back
 void erase_char();
 void newLine();
 
+//
+void draw_horizontalTotalLine(int y);
+void draw_verticalTotalLine(int x);
+void draw_verticalLine(int x, int y0, int y1);
+void draw_horizontalLine(int x0, int x1, int y);
+void setBackgroundColor(Color color);
+void cls();
+
 #endif

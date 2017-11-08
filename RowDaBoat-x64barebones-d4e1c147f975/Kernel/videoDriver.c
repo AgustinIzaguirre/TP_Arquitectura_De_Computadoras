@@ -9,6 +9,7 @@ void set_up_VESA_mode();
 
    MODE_INFO * mode_info = (MODE_INFO*)0x0000000000005C00;
    Pointer pointer = {0,0};
+   Color background_color= {0,0,0};
 
    void set_up_VESA_mode(){
    	int i,j;
@@ -99,4 +100,46 @@ void set_up_VESA_mode();
    void newLine(){
       pointer.y = pointer.y + CHAR_HEIGHT;
       pointer.x = 0;
+   }
+
+
+   //
+   //
+   void draw_horizontalLine(int x0, int x1, int y){
+      for(int i=x0; i<x1;i++){
+         draw_pixel(i,y);
+      }
+   }
+
+   void draw_verticalLine(int x, int y0, int y1){
+      for(int i=y0; i<y1;i++){
+         draw_pixel(x,i);
+      }
+   }
+
+   void draw_verticalTotalLine(int x){
+      draw_verticalLine(x,0,mode_info->height);
+   }
+
+   void draw_horizontalTotalLine(int y){
+      draw_horizontalLine(0,mode_info->width,y);
+   }
+
+void cls(){
+      Color c;
+      c.red=0;
+      c.green=0;
+      c.blue=0;
+      pointer.x=0;
+      pointer.y=0;
+      setBackgroundColor(background_color);
+   }
+
+   void setBackgroundColor(Color color){
+      background_color = color;
+      for (int x=0; x<mode_info->height;x++){
+         for (int y=0;y<mode_info->width;y++){
+            draw_pixel_with_color(x,y, color);
+         }
+      }
    }

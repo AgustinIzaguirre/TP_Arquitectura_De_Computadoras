@@ -88,6 +88,7 @@ int main()
 
 	load_idt();
 	callWrite();
+	draw_horizontalTotalLine(100);
 	// // ncPrint("[Kernel Main]");
 	// // ncNewline();
 	// // ncPrint("  Sample code module at 0x");
