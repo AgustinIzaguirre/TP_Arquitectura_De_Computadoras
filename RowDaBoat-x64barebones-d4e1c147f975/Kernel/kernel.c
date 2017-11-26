@@ -12,6 +12,8 @@ extern uint8_t bss;
 extern uint8_t endOfKernelBinary;
 extern uint8_t endOfKernel;
 
+void syscallsTest(); 
+
 static const uint64_t PageSize = 0x1000;
 
 static void * const sampleCodeModuleAddress = (void*)0x400000;
@@ -80,63 +82,24 @@ void * initializeKernelBinary()
 	ncPrint("[Done]");
 	ncNewline();
 	ncNewline();
+	load_idt();
+
 	return getStackBase();
 }
 
+int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
+
 int main()
 {	
-
-	load_idt();
-	callWrite();
-	draw_horizontalTotalLine(100);
-	// // ncPrint("[Kernel Main]");
-	// // ncNewline();
-	// // ncPrint("  Sample code module at 0x");
-	// // ncPrintHex((uint64_t)sampleCodeModuleAddress);
-	// // ncNewline();
-	// // ncPrint("  Calling the sample code module returned: ");
-	// // ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	// // ncNewline();
-	// // ncNewline();
-
-	// // ncPrint("  Sample data module at 0x");
-	// // ncPrintHex((uint64_t)sampleDataModuleAddress);
-	// // ncNewline();
-	// // ncPrint("  Sample data module contents: ");
-	// // ncPrint((char*)sampleDataModuleAddress);
-	// // ncNewline();
-
-	// // ncPrint("[Finished]");
-	// int secs = getSeconds();
-	// int minutes = getMinutes();
-	// int hours = getHours();
-	// ncPrintDec(hours);
-	// ncPrint(" : ");
-	// ncPrintDec(minutes);
-	// ncPrint(" : ");
-	// ncPrintDec(secs);
-	// ncNewline();	
-	// ncPrint("Ticks elapsed: ");
-	// ncNewline();
-	// ncPrintDec(ticks_elapsed());
-	// ncNewline();
-	// uint64_t i = ticks_elapsed();
-	// while(i<10) {
-	// 	i = ticks_elapsed();
-	// }
-	// // 	ncPrintDec(ticks_elapsed());
-	// // 	ncNewline();
-	// // }
-	// //ncPrintDec(bcd_to_decimal(minutes));
-	// ncPrintDec(ticks_elapsed());
-	
-	// ncNewline();
-	// //ncPrintDec(getKey());
-	// //readKeyboard();
-	// ncNewline();
-	// ncPrint("Termino");
-	// ncNewline();
-	//set_up_VESA_mode();
-	while(1);
+		// draw_word("entro en main",0,0);
+		((EntryPoint)sampleCodeModuleAddress)();
+		//draw_word("hola",0,0);
+		// printHexaNumber(1234);
+		// newLine();
+		// printHexaNumber(16);
+		// newLine();
+		// printHexaNumber(56789);
+		// newLine();
+	//while(1);
 	return 0;
 }

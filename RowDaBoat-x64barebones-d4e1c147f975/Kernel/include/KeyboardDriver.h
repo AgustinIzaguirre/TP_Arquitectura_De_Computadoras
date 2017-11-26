@@ -11,5 +11,9 @@
 #define BACKSPACECODE 14
 #define NEWLINECODE 28
 
-char getKey();
+char getKey(void);
+void incrementIndex(void);
+void incrementRead(void);
+int getChar(void);
+
 #endif
