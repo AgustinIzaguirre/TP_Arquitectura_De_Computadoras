@@ -10,6 +10,7 @@
 #define	CAPSLOCKCODE 58
 #define BACKSPACECODE 14
 #define NEWLINECODE 28
+#define BUFFERSIZE 256
 
 char getKey(void);
 void incrementIndex(void);

@@ -35,24 +35,13 @@ GLOBAL _int80
 
 _int80:
     
-    ;push rbp
-    ;mov rbp,rsp
-	;pushRegisters
+    push rbp
+    mov rbp,rsp
 	
-	;orden de pasaje ABI 64 rdi,rsi,rdx,rcx,r8,r9
-	;syscalls rax syscall index,rdi,rsi,rdx,r8,r9
-	
-	;mov rax,rdi    
-	;mov rdi,rsi
-	;mov rsi,rdx
-	;mov rdx,rcx
-	;r8 y r9 ya estan con sus valores
-    
     int 80h
 	
-	;popRegisters
-	;mov rsp,rbp
-	;pop rbp
+	mov rsp,rbp
+	pop rbp
 	ret
 
 

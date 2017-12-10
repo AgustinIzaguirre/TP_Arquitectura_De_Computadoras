@@ -91,15 +91,6 @@ int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 
 int main()
 {	
-		// draw_word("entro en main",0,0);
-		((EntryPoint)sampleCodeModuleAddress)();
-		//draw_word("hola",0,0);
-		// printHexaNumber(1234);
-		// newLine();
-		// printHexaNumber(16);
-		// newLine();
-		// printHexaNumber(56789);
-		// newLine();
-	//while(1);
+	((EntryPoint)sampleCodeModuleAddress)();
 	return 0;
 }

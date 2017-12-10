@@ -5,18 +5,24 @@
 #include <stdarg.h>
 extern uint64_t _int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);
 
+/*returns 1 if the given char is a letter, returns 0 if not*/
 int isAlpha(char c){
 	return ((c>='A' && c<='Z') || (c>='a' && c<='z'));
 }
 
+/*returns 1 if the given char is a digit, returns 0 if not*/
 int isNum(char c){
 	return (c>='0' && c<='9');
 }
 
+/*returns 1 if the given char is a space, returns 0 if not*/
 int isSpace(char c){
 	return (c=' ');
 }
 
+/*turns the given integer into a string and stores it in
+** the given array
+*/
 void intToStr(int num,char * ret){
 	int dig=0;
 	char aux;
@@ -41,6 +47,8 @@ void intToStr(int num,char * ret){
 		ret[0]='0';
 	}	
 }
+
+/*reverse the given string*/
 void strrev(char * str){
 	int length= strlen(str);
 	char aux[length];
@@ -52,6 +60,7 @@ void strrev(char * str){
 	}
 }
 
+/*returns the length of the given string*/
 int strlen(const char * str){
 	int i=0;
 	while(str[i]!= '\0'){
@@ -60,6 +69,7 @@ int strlen(const char * str){
 	return i;
 }
 
+/*copys the first string into the second string*/
 int strcpy(char *from, char *to){
 	int i=0;
 	for (i=0;from[i]!='\0';i++){
@@ -69,6 +79,7 @@ int strcpy(char *from, char *to){
 	return i;
 }
 
+/*returns 0 if the given strings are diferent and 1 if they are equals*/
 int strcmp(char * array1, char * array2) {
 	int i=0;
 	for (i=0;array2[i]!='\0';i++){
@@ -78,6 +89,10 @@ int strcmp(char * array1, char * array2) {
 	return array1[i] == array2[i];
 }
 
+/*prints the given string replacing %d with the integer
+** parameter received and %s with the string parameter
+** and %c with the char parameter received
+*/
 void printf(const char * str,...){
 	char num[12];
 	va_list valist;
@@ -119,144 +134,104 @@ void printf(const char * str,...){
 	va_end(valist);
 }
 
+/* print the given char on screen*/
 void putchar(const char c){
 	_int80(1,1,&c,1,0,0);
 }
 
-
+/*reads a char from the buffer and returns it*/ 
 int getchar() {
 	char c;
 	_int80(0,0,&c,1,0,0);
 	return c;
 }
 
-// /*
-// ** Lee una línea de entrada estándar de longitud como mucho maxlen y la guarda en str.
-// */
-// int readline(char *str, unsigned int maxlen) {
-//     unsigned int i;
-//     int c;
-//     for (i = 0; i < maxlen-1 && (c = getchar()) != '\n'; i++) 
-// 			str[i] = c;
-//     str[i] = '\0';
-//     return i;
-// }
+/*reads from the input the given format and when finds a %d or %c or %s
+** reads and stores its content in the int, char, or char* respectively that
+** were given
+*/ 
+int scanf(const char* format,...){
+	va_list args;
+	va_start( args, format );
 
-// int scanf(const char* str, ...){
-// 	va_list args;
-// 	va_start(args,c);
+	int quantity=0;
+	int i = 0,j=0;
+	char* read = readLine();
+	int* number;
+    char* string;
 
-// 	int ret = 0;
-// 	int flag = 0;
-// 	int i = 0;
-// 	char buffer[MAX];
-// 	int j = 0;
-// 	char currentChar;
 
-// 	while((currentChar = getchar()) != '\n'){
-// 		if(currentChar == '\b'){
-// 			if(j>0){
-// 				buffer[--j] = 0;
-// 				printf("\b");
-// 			}
-// 		}else{
-// 			if(j < MAX){
-// 				buffer[j++]	= currentChar;
-// 				putChar(currentChar);
-// 			}
-// 		}
-// 	}
-// 	buffer[j] = 0;
-// 	j = 0;
+	while(format[i]){
+		if(format[i]!='%'){
+            if((format[i]) != (read[j])){
+                return quantity;
+            } 
+            else {
+                 i++;
+                 j++;
+            }
+		}
+		else {
+			i++;
+			switch(format[i]){
+				case '%':
+                    if(read[j] != '%')
+                    	return quantity;
+                    j++;
+                    break;
+				case 'd':
+					number = va_arg(args,int*);
+					*number = 0;
+					while(isNum(read[j])) {
+						*number = (*number) *10 + read[j] - 48;
+						j++;
+					}
+				    quantity++;
+					break;
+				case 'c':
+                    string = va_arg(args, char*);
+                    *string = read[j];
+                    j++;
+                    quantity++;
+                    break;
+				case 's':
+                    string = va_arg(args,char*);
+                    char c;
+                    while(c = read[j]){
+                        *string = c;
+                        string++;
+                        j++;
+                    }
+                    quantity++;
+			}
+			i++;
+		}
+	}
 
-// 	while(c[i]!=0&&ret>=0){
-// 		switch(c[i]) {
-// 			case '%':
-// 				if(flag) {
-// 					if(buffer[j]!='%')
-// 						ret = -1;
-// 					else
-// 						j++;
-// 				} else {
-// 					flag = 1;
-// 				}
-// 				break;
-// 			case 'd':
-// 				if(flag){
-// 					if(getNumber(va_arg(args,int*),buffer,&j))
-// 						ret++;
-// 					else
-// 						ret = -1;
-// 					flag = 0;
-// 				} else {
-// 					if(buffer[j]!='d')
-// 						ret = -1;
-// 					else
-// 						j++;
-// 				}
-// 				break;
-// 			case 's':
-// 			if(flag){
-// 					j += copyString(buffer+j,va_arg(args,char*));
-// 					ret++;
-// 					flag = 0;
-// 				} else {
-// 					if(buffer[j]!='s')
-// 						ret = -1;
-// 					else
-// 						j++;
-// 				}
-// 				break;
-// 			default:
-// 				if(buffer[j]!=c[i])
-// 					ret = -1;
-// 				else
-// 					j++;
-// 		}
-// 		i++;
-// 	}
-// 	printf("\n");
-// 	va_end(args);
-// 	return ret;
-// }
+	return quantity;
+}
 
-// int scanf(const char *format, ...) {
-// 	int i, j, num;
-// 	int argc = 0;
-// 	int *p;
-// 	char *str;
-// 	char aux[BUFFER_SIZE];
-// 	va_list args;
-// 	va_start(args, format);
+/*reads text from the input until enter and returns what has read*/
+char* readLine() {
+    int bufferIndex = 0;
+    char buff[BUFFER_SIZE];
 
-// 	readline(aux, BUFFER_SIZE);
+    int c ;
 
-// 	for (i = j = 0; aux[j] != '\0' && format[i] != '\0'; i++, j++) {
-// 		if (format[i] == '%') {
-// 			i++;
-// 			if (format[i] == 'd') {
-// 				if(aux[j] != '+' && aux[j] != '-' && !isdigit(aux[j]))
-// 					return argc;
-// 				num = atoi(aux + j);
-// 				p = va_arg(args, int *);
-// 				*p = num;
-// 				while (isdigit(aux[j+1]))
-// 					j++;
-// 			}
-// 			else if (format[i] == 's') {
-// 				str = va_arg(args, char *);
-// 				strcpy(str, aux+j);
-// 				return argc+1;
-// 			}
-// 			else if (format[i] == '%' && aux[j++] != '%')
-// 				return argc;
-// 			argc++;
-// 		} 
-// 		else if (format[i] != aux[j])
-// 			return argc;
-// 	}
-
-// 	va_end(args);
-// 	return argc;
-// }
-
+    while ((c = getchar()) != '\n') {
+        if(c == '\b'){
+            if (bufferIndex != 0) {
+                bufferIndex--;
+            }
+        }
+        else{
+            if (bufferIndex <= BUFFER_SIZE) {
+                buff[bufferIndex++] = c;
+            }
+            putchar(c);
+        }
+    }
+    putchar(c);
+    buff[bufferIndex] = '\0';
+    return buff;
+}

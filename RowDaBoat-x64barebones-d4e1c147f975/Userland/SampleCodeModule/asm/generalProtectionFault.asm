@@ -3,5 +3,8 @@ section .text
 GLOBAL generalProtectionFaultTest
 
 generalProtectionFaultTest:
-	mov cr6,eax
+	mov [variable],byte rax
 	ret
+
+section .rodata
+variable db 0xA

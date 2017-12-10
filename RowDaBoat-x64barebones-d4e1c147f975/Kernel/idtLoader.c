@@ -26,30 +26,20 @@ void load_idt() {
   _cli();
 
   setup_IDT_entry (0x00, (uint64_t)&_exception0Handler);
+  setup_IDT_entry (0x03, (uint64_t)&_exception3Handler);
   setup_IDT_entry (0x04, (uint64_t)&_exception4Handler);
   setup_IDT_entry (0x06, (uint64_t)&_exception6Handler);
   setup_IDT_entry (0x0D, (uint64_t)&_exception13Handler);
   setup_IDT_entry (0x20, (uint64_t)&_irq00Handler);
   setup_IDT_entry (0x21, (uint64_t)&_irq01Handler);
   setup_IDT_entry (0x80, (uint64_t)&_systemCallsHandler);
-
-	//Solo interrupcion timer tick habilitadas
 	
   picMasterMask(0xFC); 
 	picSlaveMask(0xFF);
         
 	_sti();
 }
-// void load_idt() { 
 
-// ncNewline();
-
-// ncPrint("  irq00Handler entry at 0x");
-
-// ncPrintHex((uint64_t)&_irq00Handler);
-
-// ncNewline();
-// }
 static void setup_IDT_entry (int index, uint64_t offset) {
   idt[index].selector = 0x08;
   idt[index].offset_l = offset & 0xFFFF;

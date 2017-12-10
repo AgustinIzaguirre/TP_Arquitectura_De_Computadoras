@@ -16,8 +16,9 @@ GLOBAL _irq05Handler
 GLOBAL _systemCallsHandler
 
 GLOBAL _exception0Handler
-GLOBAL _exception6Handler
+GLOBAL _exception3Handler
 GLOBAL _exception4Handler
+GLOBAL _exception6Handler
 GLOBAL _exception13Handler
 
 EXTERN irqDispatcher
@@ -80,57 +81,21 @@ SECTION .text
 
 
 ;Fuente:http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
-;%macro systemCallHandler 0
-;	push rbp
-;	push rsp
-;	push rbx
-;	push r12
-;	push r13
-;	push r15
-;	
-;	;orden de pasaje ABI 64 rdi,rsi,rdx,rcx,r8,r9
-;	;syscalls rax syscall index,rdi,rsi,rdx,r8,r9
-;	mov rbx, rdi ;preservo rdi
-;	mov rdi, rax ; pasaje del primer parametro
-;	
-;	mov r12, rsi ;preservo rsi
-;	mov rsi, rbx ;pasaje del segundo parametro
-;	
-;	mov r15, rdx ;preservo rdx
-;	mov rdx,r12 ;pasaje del tercer parametro
-;
-;	mov rcx, r15 ;pasaje del cuarto parametro
-;	;r8 y r9 estan con sus valores
-;	call systemCallDispatcher
-;
-;	pop r15
-;	pop r13
-;	pop r12
-;	pop rbx
-;	pop rsp
-;	pop rbp
-;	iretq
-;%endmacro
-
 %macro systemCallHandler 0
 	call systemCallDispatcher
 	iretq
 %endmacro
 
 %macro exceptionHandler 1
-	push rsp;
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
-	mov rsi,rsp
+	mov rsi, rsp
 	call exceptionDispatcher
-
 	popState
-	pop rsp
 	mov qword [rsp], main
 	iretq
 %endmacro
-
 
 _hlt:
 	sti
@@ -195,6 +160,10 @@ _systemCallsHandler:
 ;Zero Division Exception
 _exception0Handler:
 	exceptionHandler 0
+
+;Breakpoint Exception
+_exception3Handler:
+	exceptionHandler 3
 
 ;Overflow Exception
 _exception4Handler:
